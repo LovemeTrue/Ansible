@@ -3,7 +3,7 @@ name: Auto Commit and Push
 on:
   push:
     branches: [ "main" ]
-  workflow_dispatch:  # Разрешает ручной запуск
+  workflow_dispatch:
 
 jobs:
   auto-push:
@@ -22,10 +22,10 @@ jobs:
       - name: Commit changes
         run: |
           git commit -m "Auto-commit by GitHub Actions" || echo "No changes to commit"
-          
+
       - name: Push changes
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}  # Используем сохранённый токен
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
-          git remote set-url origin "https://${GH_TOKEN}@github.com/LovemeTrue/Ansible.git"
+          git remote set-url origin "https://LovemeTrue:${GH_TOKEN}@github.com/LovemeTrue/Ansible.git"
           git push origin main
