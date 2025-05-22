@@ -2,7 +2,7 @@ name: Pull from Server via HTTPS with AutoCreds
 
 on:
   schedule:
-    - cron: '*/5 * * * *'  # Каждые 5 минут (исправлено с */450)
+    - cron: '*/700 * * * *'  # Каждые 5 минут (исправлено с */450)
   workflow_dispatch:
 
 jobs:
