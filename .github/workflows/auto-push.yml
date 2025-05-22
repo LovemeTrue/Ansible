@@ -18,12 +18,12 @@ jobs:
       - name: Clone repo from local server
         run: |
           rm -rf local-copy
-          git clone kind@192.168.29.24:/home/kind/k8s-cluster-config.git local-copy
+          git clone kind@192.168.29.24:/home/kind/ansible-cluster/Ansible.git local-copy
 
       - name: Configure Git
         run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
+          git config --global user.name "LovemeTrue"
+          git config --global user.email "Lovemetrue@github.com"
 
       - name: Push to GitHub via SSH
         run: |
