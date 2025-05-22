@@ -2,7 +2,7 @@ name: Pull from Server via HTTPS
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '*/450 * * * *'
   workflow_dispatch:
 
 jobs:
@@ -17,3 +17,4 @@ jobs:
           git add .
           git commit -m "Auto-sync" || true
           git push origin main
+          
