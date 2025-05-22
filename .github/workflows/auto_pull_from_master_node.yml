@@ -1,4 +1,4 @@
-name: Pull from Server via HTTPS
+name: Pull from Server via HTTPS with AutoCreds
 
 on:
   schedule:
