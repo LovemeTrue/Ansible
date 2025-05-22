@@ -12,6 +12,7 @@ jobs:
     steps:
       - name: Pull from local repo
         run: |
+          git config --global --add safe.directory /home/kind/ansible-cluster
           cd /home/kind/ansible-cluster
           git pull origin main || true
           git add .
