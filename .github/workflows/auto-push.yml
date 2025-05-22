@@ -27,5 +27,5 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}  # Используем сохранённый токен
         run: |
-          git remote set-url origin "https://LovemeTrue:${GH_TOKEN}@github.com/LovemeTrue/Ansible.git"
+          git remote set-url origin "https://${GH_TOKEN}@github.com/LovemeTrue/Ansible.git"
           git push origin main
