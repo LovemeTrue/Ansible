@@ -12,11 +12,10 @@ jobs:
     steps:
       - name: Pull from local repo
         run: |
-          sudo su
           git config --global --add safe.directory /home/kind/ansible-cluster
           cd /home/kind/ansible-cluster
-          git pull origin main || true
-          git add .
-          git commit -m "Auto-sync" || true
-          git push origin main
+          sudo git pull origin main || true
+          sudo git add .
+          sudo git commit -m "Auto-sync" || true
+          sudo git push origin main
           
