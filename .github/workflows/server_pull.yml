@@ -1,0 +1,27 @@
+name: Pull from Server via HTTPS
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'  # Every 5 minutes
+  workflow_dispatch:
+
+jobs:
+  pull-from-server:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Pull from server
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          # Configure git credentials
+          git config --global credential.helper 'store --file ~/.git-credentials'
+          echo "https://${{ secrets.GH_TOKEN }}@github.com" > ~/.git-credentials
+
+          # Execute remote commands via SSH
+          ssh -o StrictHostKeyChecking=no \
+              kind@192.168.29.24 \
+              "cd /home/kind/ansible-cluster && \
+               git pull https://${{ secrets.GH_TOKEN }}@github.com/LovemeTrue/Ansible.git main && \
+               git push https://${{ secrets.GH_TOKEN }}@github.com/LovemeTrue/Ansible.git main"
