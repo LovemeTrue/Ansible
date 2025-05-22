@@ -8,3 +8,4 @@
 ## Основные команды
 - Проверить подключение: `ansible all -m ping`
 - Запустить базовую настройку: `ansible-playbook playbooks/base-setup.yml`
+# Ansible
