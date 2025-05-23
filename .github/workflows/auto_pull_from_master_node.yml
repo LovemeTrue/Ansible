@@ -12,13 +12,9 @@ jobs:
     steps:
       - name: Setup SSH Environment
         run: |
-          # Создаем .ssh директорию если не существует
-          mkdir -p ~/.ssh
-          chmod 700 ~/.ssh
-          
           # Добавляем приватный ключ
-          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/github_actions
-          chmod 600 ~/.ssh/github_actions
+          echo "${{ secrets.DEPLOY_SSH_KEY }}" > /home/kind/.ssh/github_actions_new.pub
+          chmod 600 /home/kind/.ssh/github_actions_new.pub
           
           # Добавляем GitHub в known_hosts
           echo "github.com ssh-github_actions AAAAC3NzaC1lZDI1NTE5AAAAII9LgFJt1q9Z5JQ7Jg7Jg7Jg7Jg7Jg7Jg7Jg7Jg7Jg" >> ~/.ssh/known_hosts
@@ -31,7 +27,7 @@ jobs:
           git config --global --add safe.directory /home/kind/ansible-cluster
           git config --global user.name "Auto-Sync-Bot"
           git config --global user.email "auto-sync@example.com"
-          git config --global core.sshCommand "ssh -i ~/.ssh/github_actions -o IdentitiesOnly=yes"
+          git config --global core.sshCommand "ssh -i /home/kind/.ssh/github_actions_new -o IdentitiesOnly=yes"
 
       - name: Sync Repository
         run: |
