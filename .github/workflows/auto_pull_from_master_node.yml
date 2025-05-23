@@ -19,6 +19,7 @@ jobs:
         run: |
           git config --global --add safe.directory /home/kind/ansible-cluster
           cd /home/kind/ansible-cluster
+          git pull --rebase origin main || git pull origin main
           git pull origin main || true
           git add .
           git commit -m "Auto-sync $(date '+%Y-%m-%d %H:%M:%S')" || true
