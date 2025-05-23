@@ -19,7 +19,22 @@ jobs:
           git config --global user.name "Auto-Sync-Bot"
           git config --global user.email "auto-sync@example.com"
           git config --global pull.rebase true
-  
+      
+      - name: Clean up repository state
+        run: |
+          cd /home/kind/ansible-cluster
+          # Удаляем возможные артефакты прерванных операций
+          rm -rf .git/rebase-merge .git/rebase-apply .git/MERGE_*
+          # Сбрасываем все локальные изменения
+          git reset --hard HEAD
+          git clean -fd
+
+      - name: Fetch latest changes
+        run: |
+          cd /home/kind/ansible-cluster
+          git fetch origin
+          git checkout -B main origin/main --force
+
       - name: Sync repository
         run: |
           cd /home/kind/ansible-cluster
