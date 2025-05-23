@@ -14,10 +14,14 @@ jobs:
           git config --global credential.helper 'store --file ~/.git-credentials'
           echo "https://LovemeTrue:${{ secrets.GH_TOKEN }}@github.com" > ~/.git-credentials
           chmod 600 ~/.git-credentials
+          git config --global rebase.autoStash true
+          git config --global --add safe.directory /home/kind/ansible-cluster
+          git config --global user.name "Auto-Sync-Bot"
+          git config --global user.email "auto-sync@example.com"
+          git config --global pull.rebase true
 
       - name: Sync repository
         run: |
-          git config --global --add safe.directory /home/kind/ansible-cluster
           cd /home/kind/ansible-cluster
           git commit -m "Auto-sync $(date '+%Y-%m-%d %H:%M:%S')" || true
           git pull --rebase origin main || git pull origin main
