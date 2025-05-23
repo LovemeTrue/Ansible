@@ -1,8 +1,9 @@
+
 name: Pull from Server via HTTPS with AutoCreds
 
 on:
   schedule:
-    - cron: '*/10 * * * *'  # Каждые 700 минут 
+    - cron: '*/700 * * * *'  # Каждые 700 минут 
   workflow_dispatch:
 
 jobs:
@@ -14,36 +15,11 @@ jobs:
           git config --global credential.helper 'store --file ~/.git-credentials'
           echo "https://LovemeTrue:${{ secrets.GH_TOKEN }}@github.com" > ~/.git-credentials
           chmod 600 ~/.git-credentials
-          git config --global credential.helper 'store --file ~/.git-credentials'
-          echo "https://${{ secrets.GH_LOGIN }}:${{ secrets.GH_TOKEN }}@github.com" > ~/.git-credentials
-          chmod 600 ~/.git-credentials
-          git config --global rebase.autoStash true
-          git config --global --add safe.directory /home/kind/ansible-cluster
-          git config --global user.name "Auto-Sync-Bot"
-          git config --global user.email "auto-sync@example.com"
-          git config --global pull.rebase true
-      
-      - name: Clean up repository state
-        run: |
-          cd /home/kind/ansible-cluster
-          # Удаляем возможные артефакты прерванных операций
-          rm -rf .git/rebase-merge .git/rebase-apply .git/MERGE_*
-          # Сбрасываем все локальные изменения
-          git reset --hard HEAD
-          git clean -fd
-
-      - name: Fetch latest changes
-        run: |
-          cd /home/kind/ansible-cluster
-          git fetch origin
-          git checkout -B main origin/main --force
 
       - name: Sync repository
         run: |
+          git config --global --add safe.directory /home/kind/ansible-cluster
           cd /home/kind/ansible-cluster
-          git fetch origin
-          git commit -m "Auto-sync $(date '+%Y-%m-%d %H:%M:%S')" || true
-          git pull --rebase origin main || git pull origin main
           git pull origin main || true
           git add .
           git commit -m "Auto-sync $(date '+%Y-%m-%d %H:%M:%S')" || true
