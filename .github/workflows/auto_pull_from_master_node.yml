@@ -26,6 +26,7 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/github_actions
           chmod 600 ~/.ssh/github_actions
+          cd /home/kind/ansible-cluster
           git remote set-url origin git@github.com:LovemeTrue/Ansible.git
 
       - name: Sync repository
