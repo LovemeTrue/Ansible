@@ -22,7 +22,7 @@ jobs:
           # Проверяем существование директории
           if [ ! -d "/home/kind/.ssh" ]; then
             sudo mkdir -p /home/kind/.ssh
-            sudo chown kind:kind /home/kind/.ssh
+            sudo chown root:root /home/kind/.ssh
           fi
           
           # Устанавливаем корректные права
