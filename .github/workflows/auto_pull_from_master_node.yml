@@ -15,7 +15,12 @@ jobs:
           git config --global credential.helper 'store --file ~/.git-credentials'
           echo "https://LovemeTrue:${{ secrets.GH_TOKEN }}@github.com" > ~/.git-credentials
           chmod 600 ~/.git-credentials
-
+          
+      - name: Changing Permission Policies
+        run: |
+          sudo chown -R kind:kind /home/kind/ansible-cluster
+          sudo chmod -R ug+rwX /home/kind/ansible-cluster/.git
+          
       - name: Sync repository
         run: |
           git config --global --add safe.directory /home/kind/ansible-cluster
