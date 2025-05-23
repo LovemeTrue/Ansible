@@ -20,7 +20,16 @@ jobs:
         run: |
           sudo chown -R kind:kind /home/kind/ansible-cluster
           sudo chmod -R ug+rwX /home/kind/ansible-cluster/.git
-          
+
+      - name: Set SSH Auth
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          echo "github.com ssh-ed25519 AAAAC3..." > ~/.ssh/known_hosts
+          cd /home/kind/ansible-cluster
+          git remote set-url origin git@github.com:LovemeTrue/Ansible.git
+        
       - name: Sync repository
         run: |
           git config --global --add safe.directory /home/kind/ansible-cluster
