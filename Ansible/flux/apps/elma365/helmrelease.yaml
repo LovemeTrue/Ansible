@@ -13,5 +13,4 @@ spec:
         name: elma-repo
         namespace: flux-system
   valuesFiles:
-    - ./values/common.yaml
-    - ./values/worker.yaml
+    - ./values/values-elma365.yaml
