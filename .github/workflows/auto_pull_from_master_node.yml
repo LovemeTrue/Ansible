@@ -24,7 +24,7 @@ jobs:
       - name: Add SSH Key
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/github_actions
+          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/github_actions
           chmod 600 ~/.ssh/github_actions
           git remote set-url origin git@github.com:LovemeTrue/Ansible.git
 
