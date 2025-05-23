@@ -18,7 +18,7 @@ jobs:
           
           # Добавляем приватный ключ
           echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/github_actions
-          chmod 600 ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/github_actions
           
           # Добавляем GitHub в known_hosts
           echo "github.com ssh-github_actions AAAAC3NzaC1lZDI1NTE5AAAAII9LgFJt1q9Z5JQ7Jg7Jg7Jg7Jg7Jg7Jg7Jg7Jg7Jg" >> ~/.ssh/known_hosts
