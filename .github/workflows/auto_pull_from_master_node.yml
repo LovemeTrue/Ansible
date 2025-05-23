@@ -15,7 +15,7 @@ jobs:
           echo "https://LovemeTrue:${{ secrets.GH_TOKEN }}@github.com" > ~/.git-credentials
           chmod 600 ~/.git-credentials
           git config --global credential.helper 'store --file ~/.git-credentials'
-          echo "https://${{ secrets.GH_ULOGIN }}:${{ secrets.GH_TOKEN }}@github.com" > ~/.git-credentials
+          echo "https://${{ secrets.GH_LOGIN }}:${{ secrets.GH_TOKEN }}@github.com" > ~/.git-credentials
           chmod 600 ~/.git-credentials
           git config --global rebase.autoStash true
           git config --global --add safe.directory /home/kind/ansible-cluster
