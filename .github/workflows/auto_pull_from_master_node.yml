@@ -1,34 +1,52 @@
-
-name: Pull from Server via HTTPS with AutoCreds
+name: Auto-Sync Repository
 
 on:
   schedule:
-    - cron: '*/700 * * * *'  # Каждые 700 минут 
+    - cron: '*/5 * * * *'  # Каждые 5 минут
   workflow_dispatch:
 
 jobs:
-  pull-from-server:
+  sync-repo:
     runs-on: [self-hosted, linux, x64]
+    
     steps:
-  
-      - name: Changing Permission Policies
+      - name: Setup SSH Environment
         run: |
-          sudo chown -R kind:kind /home/kind/ansible-cluster
-          sudo chmod -R ug+rwX /home/kind/ansible-cluster/.git
-          
-      - name: Add SSH Key
-        run: |
+          # Создаем .ssh директорию если не существует
           mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          
+          # Добавляем приватный ключ
           echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/github_actions
-          chmod 600 ~/.ssh/github_actions
-          cd /home/kind/ansible-cluster
-          git remote set-url origin git@github.com:LovemeTrue/Ansible.git
+          chmod 600 ~/.ssh/id_ed25519
+          
+          # Добавляем GitHub в known_hosts
+          echo "github.com ssh-github_actions AAAAC3NzaC1lZDI1NTE5AAAAII9LgFJt1q9Z5JQ7Jg7Jg7Jg7Jg7Jg7Jg7Jg7Jg7Jg" >> ~/.ssh/known_hosts
+          
+          # Тестируем подключение
+          ssh -T git@github.com || true
 
-      - name: Sync repository
+      - name: Configure Git
         run: |
           git config --global --add safe.directory /home/kind/ansible-cluster
+          git config --global user.name "Auto-Sync-Bot"
+          git config --global user.email "auto-sync@example.com"
+          git config --global core.sshCommand "ssh -i ~/.ssh/github_actions -o IdentitiesOnly=yes"
+
+      - name: Sync Repository
+        run: |
           cd /home/kind/ansible-cluster
-          git pull origin main || true
+          
+          # Принудительно обновляем ветку
+          git remote set-url origin git@github.com:LovemeTrue/Ansible.git
+          git fetch origin
+          git reset --hard origin/main
+          
+          # Проверяем и коммитим изменения
           git add .
-          git commit -m "Auto-sync $(date '+%Y-%m-%d %H:%M:%S')" || true
-          git push origin main
+          if [ -n "$(git status --porcelain)" ]; then
+            git commit -m "Auto-sync: $(date '+%Y-%m-%d %H:%M:%S')"
+            git push origin main
+          else
+            echo "Нет изменений для коммита"
+          fi
