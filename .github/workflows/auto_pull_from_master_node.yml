@@ -43,6 +43,6 @@ jobs:
         run: |
           cd /home/kind/ansible-cluster
           sudo -u kind git pull origin main
-          sudo -u kind git add .
+          sudo -u kind git add --all
           sudo -u kind git commit -m "Auto-sync $(date '+%Y-%m-%d %H:%M:%S')" || echo "No changes"
           sudo -u kind git push origin main
