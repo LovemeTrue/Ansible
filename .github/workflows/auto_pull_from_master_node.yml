@@ -10,12 +10,7 @@ jobs:
   pull-from-server:
     runs-on: [self-hosted, linux, x64]
     steps:
-      - name: Configure Git credentials
-        run: |
-          git config --global credential.helper 'store --file ~/.git-credentials'
-          echo "https://LovemeTrue:${{ secrets.GH_TOKEN }}@github.com" > ~/.git-credentials
-          chmod 600 ~/.git-credentials
-          
+  
       - name: Changing Permission Policies
         run: |
           sudo chown -R kind:kind /home/kind/ansible-cluster
