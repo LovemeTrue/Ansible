@@ -2,7 +2,7 @@ name: Pull from Server via HTTPS with AutoCreds
 
 on:
   schedule:
-    - cron: '*/700 * * * *'  # Каждые 700 минут 
+    - cron: '*/10 * * * *'  # Каждые 700 минут 
   workflow_dispatch:
 
 jobs:
